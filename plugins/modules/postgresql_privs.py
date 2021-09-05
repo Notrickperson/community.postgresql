@@ -300,6 +300,20 @@ EXAMPLES = r'''
     privs: ALL
     type: database
     role: librarian
+   
+#Granting execution privilege to functions
+#for example the function pg_start_backup
+- name: Grant execution privilege to functions pg_start_backup
+  postgresql_privs:
+    port: 5432
+    database: postgres
+    schema: pg_catalog
+    type: function
+    objs: "pg_start_backup(text:boolean:boolean)"
+    state: present
+    privs: EXECUTE
+    roles: foo
+  become_user: postgres
 
 # Available since version 2.7
 # Objs must be set, ALL_DEFAULT to TABLES/SEQUENCES/TYPES/FUNCTIONS
